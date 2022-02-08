@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="shortcut icon"
+          href="/resources/Contacts.png"
+          type="image/x-icon">
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/js/site.js" ></script>
+</head>
+<body>
+<header>
+    <h1>CRM PROJECT</h1>
+</header>
+<main>
+    <article>
+        <table id="ContactsTable" border="1">
+
+            <caption>Contacts</caption>
+
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mobile Phone</th>
+                <th>Job Title</th>
+                <th>Birth Date</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            </tbody>
+        </table>
+        <div id="Buttons">
+            <button id="AddButton">Add</button>
+            <button id="EditButton">Edit</button>
+            <button id="DeleteButton">Delete</button>
+        </div>
+    </article>
+</main>
+<footer>
+    <div class="FooterBlock">
+        <h1>CRM PROJECT</h1>
+    </div>
+    <div id="ContactDates" class="FooterBlock Contacts">
+        <span><h3>Contacts</h3></span>
+
+    </div>
+</footer>
+<div id="AdditionalTask" class="Modal">
+    <div id="closeAdditionalTask">
+        <span class="close">&times</span>
+    </div>
+    <div id="AdditionalTaskModal">
+        <h2>Adding</h2>
+        <input type="text" id="Name" placeholder="Name">
+        <input type="text" id="Phone" placeholder="Mobile Phone">
+        <select id="JobTitleChoice">
+            
+        </select>
+        <input type="text" id="BirthDate" placeholder="Birth Date">
+        <button id="ConfirmButton" class="Button">Add</button>
+    </div>
+</div>
+</body>
+</html>

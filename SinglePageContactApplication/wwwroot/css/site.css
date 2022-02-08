@@ -1,0 +1,223 @@
+﻿body
+{
+  font-size: 1.1em;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+main
+{
+  display: flex;
+  flex-direction: column;
+}
+
+article
+{
+  font-family: "Arial";
+  background-color: #4B539F;
+  flex: 2 2 12em;
+  padding: 1em;
+}
+
+table
+{
+  background: #FFFFFF;
+  border: 1px solid #4B539F;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  text-align: center;
+  color: #000000;
+  width: 80%;
+  margin: 2em 6em 1.5em;
+}
+
+td, th
+{
+  padding: 0.5em 0;
+}
+
+button:hover
+{
+  color: black;
+}
+
+button
+{
+  background: #9F9C4B;
+  width: 11em;
+  height: 2.5em;
+  display: inline;
+  margin: 0 1em 1em;
+  font-size: 20px;
+  border-color: #9F9C4B;
+}
+
+#Buttons
+{
+  text-align: center;
+  margin: 0 11em 3em;
+}
+
+caption
+{
+  text-align: left;
+  margin-bottom: 1em;
+  font-size:1.2em;
+  font-weight: bold;
+}
+
+h1
+{
+  margin: 1em 1.5em;
+}
+
+
+.FooterBlock span, h1
+{
+  color: #4B539F;
+}
+
+
+footer
+{
+  flex: 0 0 13em;
+  float: left;
+}
+
+.FooterBlock
+{
+  width: 49%;
+  display: inline-block;
+}
+
+
+tbody tr:hover,button:hover, .close:hover
+{
+  cursor: pointer;
+}
+
+button, caption
+{
+  color: #FFFFFF;
+}
+
+button, table
+{
+  border-radius: 8px;
+}
+
+h1, button
+{
+  font-family: "Arial Black";
+}
+
+.Contacts
+{
+  margin-top: 1em;
+  padding-left: 1em;
+  vertical-align: middle;
+}
+
+
+@media screen and (min-width: 600px)
+{
+  body
+  {
+    min-height: 100vh;
+  }
+  main
+  {
+    flex-direction: row;
+    min-height: 100%;
+    flex: 1 1 auto;
+  }
+}
+
+.close:hover
+{
+  color: red;
+}
+
+.close
+{
+  margin-right: 5px;
+}
+
+#closeAdditionalTask, .close
+{
+  font-size: x-large;
+  text-align: right;
+  color: black;
+  background-color: #FFFFFF;
+}
+
+#closeAdditionalTask
+{
+  height: 30px;
+  width: 840px
+}
+
+h2
+{
+  font-size: xx-large;
+  margin: 0 43%;
+}
+
+#AdditionalTask
+{
+  position: fixed;
+  display: none;
+  animation: Animation 1s;
+  width:100%;
+  min-height:100%;
+  top: 11%;
+  left: 16%;
+}
+
+input, select
+{
+  font-size: large;
+  margin: 20px 185px 0;
+  width: 400px;
+  height: 40px;
+}
+
+select
+{
+  width: 408px;
+  height: 45px;
+}
+
+#AdditionalTaskModal
+{
+  padding: 20px;
+  background-color: #4B539F;
+  width: 800px;
+  height: 400px;
+}
+
+#AdditionalTaskModal button
+{
+  margin: 30px 280px 5px;
+}
+
+@keyframes Animation
+{
+  from
+  {
+    top: -500px;
+  }
+
+  to
+  {
+    top: 11%;
+    left: 16%;
+  }
+}
+
+.Selected
+{
+  background-color: #4B539F;
+}
