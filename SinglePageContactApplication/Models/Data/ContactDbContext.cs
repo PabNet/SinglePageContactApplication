@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SinglePageContactApplication.Models.Entities;
 
 namespace SinglePageContactApplication.Models.Data
 {
-    public class ContactDbContext : DbContext, IDbContext
+    public class ContactDbContext : DbContext
     {
         public DbSet<Employee> Employees { get; set; } = null!;
         public DbSet<JobTitle> JobTitles { get; set; } = null!;
@@ -40,7 +38,7 @@ namespace SinglePageContactApplication.Models.Data
             modelBuilder.Entity<Employee>().HasData(
                 new List<Employee>()
                 {
-                    new Employee()
+                    new()
                     {
                         Id = 1,
                         Name = "Ekaterina Maninets",
@@ -48,7 +46,7 @@ namespace SinglePageContactApplication.Models.Data
                         BirthDate = new DateTime(2001, 5, 10),
                         JobTitleId = designer.Id
                     },
-                    new Employee()
+                    new()
                     {
                         Id = 2,
                         Name = "Petr Fedorchuk",
@@ -56,7 +54,7 @@ namespace SinglePageContactApplication.Models.Data
                         BirthDate = new DateTime(1992, 10, 2),
                         JobTitleId = developer.Id
                     },
-                    new Employee()
+                    new()
                     {
                         Id = 3,
                         Name = "Margarita Bashalova",
@@ -64,7 +62,7 @@ namespace SinglePageContactApplication.Models.Data
                         BirthDate = new DateTime(1999, 1, 7),
                         JobTitleId = recruiter.Id
                     },
-                    new Employee()
+                    new()
                     {
                         Id = 4,
                         Name = "Nikolai Gorbets",
@@ -74,38 +72,13 @@ namespace SinglePageContactApplication.Models.Data
                     },
                 }
             );
-
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql
-            (IDbContext.DbPath,
-                new MySqlServerVersion
-                (
-                    new Version
-                    (
-                        (int)IDbContext.VersionValues.Major,
-                        (int)IDbContext.VersionValues.Minor,
-                        (int)IDbContext.VersionValues.Build
-                    )
-                )
-             );
             
         }
 
-        public void DeleteDataBase()
+        private void DeleteDataBase()
         {
             base.Database.EnsureDeleted();
         }
-
-        private class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
-        {
-            public void Configure(EntityTypeBuilder<Employee> builder)
-            {
-                
-            }
-        }
+        
     }
 }

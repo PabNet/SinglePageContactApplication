@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
+﻿using Microsoft.AspNetCore.Mvc;
 using SinglePageContactApplication.RuntimePlugins;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using SinglePageContactApplication.Models.Data;
 using SinglePageContactApplication.Models.Entities;
@@ -70,7 +64,7 @@ namespace SinglePageContactApplication.Controllers
         public void UpdateEmployee(uint id, [FromBody] JsonElement jsonEmployee)
         {
             var employee = this._context.Employees.First(e => e.Id == id);
-            employee ^= jsonEmployee;   
+            employee += jsonEmployee;   
 
             this._context.SaveChanges();
         }

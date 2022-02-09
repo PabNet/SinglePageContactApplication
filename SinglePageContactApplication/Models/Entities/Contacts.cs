@@ -1,4 +1,7 @@
-﻿namespace SinglePageContactApplication.Models.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using SinglePageContactApplication.RuntimePlugins;
+
+namespace SinglePageContactApplication.Models.Entities
 {
     public class Contacts
     {

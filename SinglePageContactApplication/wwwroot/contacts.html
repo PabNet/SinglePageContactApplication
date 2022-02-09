@@ -8,6 +8,7 @@
           href="/resources/Contacts.png"
           type="image/x-icon">
     <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/js/values.js" ></script>
     <script src="/js/site.js" ></script>
 </head>
 <body>
@@ -29,14 +30,14 @@
             </tr>
             </thead>
             <tbody>
-
-
             </tbody>
         </table>
         <div id="Buttons">
             <button id="AddButton">Add</button>
             <button id="EditButton">Edit</button>
             <button id="DeleteButton">Delete</button>
+            <br>
+            <label id="ErrorMessage"></label>
         </div>
     </article>
 </main>
@@ -46,7 +47,6 @@
     </div>
     <div id="ContactDates" class="FooterBlock Contacts">
         <span><h3>Contacts</h3></span>
-
     </div>
 </footer>
 <div id="AdditionalTask" class="Modal">
@@ -55,12 +55,11 @@
     </div>
     <div id="AdditionalTaskModal">
         <h2>Adding</h2>
-        <input type="text" id="Name" placeholder="Name">
-        <input type="text" id="Phone" placeholder="Mobile Phone">
-        <select id="JobTitleChoice">
-            
+        <label for="Name"></label><br><input autocomplete="off" type="text" id="Name" placeholder="Name">
+        <label for="Phone"></label><br><input autocomplete="off" type="text" id="Phone" placeholder="Mobile Phone">
+        <label for="JobTitleChoice"></label><br><select id="JobTitleChoice">
         </select>
-        <input type="text" id="BirthDate" placeholder="Birth Date">
+        <label for="BirthDate"></label><br><input autocomplete="off" type="text" id="BirthDate" placeholder="Birth Date">
         <button id="ConfirmButton" class="Button">Add</button>
     </div>
 </div>

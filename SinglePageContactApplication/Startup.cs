@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SinglePageContactApplication.Models.Data;
+using SinglePageContactApplication.RuntimePlugins;
 
 namespace SinglePageContactApplication
 {
@@ -25,7 +23,11 @@ namespace SinglePageContactApplication
         {
             services.AddControllers();
 
-            services.AddDbContext<ContactDbContext>();
+            services.AddDbContext<ContactDbContext>(options =>
+            {
+                options.UseMySql(this.Configuration.GetConnectionString(DataBaseComponentNames.DataBase),
+                    new MySqlServerVersion(new Version(8, 0, 27)));
+            });
 
         }
 
@@ -38,7 +40,7 @@ namespace SinglePageContactApplication
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler(Routes.ErrorPageRoute);
                 
                 app.UseHsts();
             }

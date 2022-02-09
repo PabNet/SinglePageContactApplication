@@ -1,19 +1,9 @@
-﻿const serverURL = "/contacts";
-let modes = {TableEntries: "Table",
-             ContactDetails: "Contacts",
-             JobTitleList: "JobTiTleList",
-             EmployeeId: "0"},
-employeePosition = '', employeeId = 0;
+﻿$(document).ready(() => {
 
-$(document).ready(() => {
-    
-    GetAllContacts();
+    getDataFromServer(modes.TableEntries);
     getDataFromServer(modes.ContactDetails);
-
-    function GetAllContacts()
-    {
-        getDataFromServer(modes.TableEntries);
-    }
+    clickFlag = false;
+    
     
      function getDataFromServer(mode)
      {
@@ -56,7 +46,7 @@ $(document).ready(() => {
      {
          $("#Name").val(employee.Name);
          $("#Phone").val(employee.PhoneNumber);
-         $("#BirthDate").val(employee.BirthDate);
+         $("#BirthDate").val(cutDate(employee.BirthDate));
          employeePosition = employee.Position.Position;
      }
      
@@ -85,7 +75,7 @@ $(document).ready(() => {
              "<td>" + entry.Name + "</td>" +
              "<td>" + entry.PhoneNumber + "</td>" +
              "<td>" + entry.Position.Position + "</td>" +
-             "<td>" + entry.BirthDate.substr(0, 10) + "</td>" +
+             "<td>" + cutDate(entry.BirthDate) + "</td>" +
              "</tr>"
          });
          $("#ContactsTable tbody").empty().append(tableContent);
@@ -101,8 +91,8 @@ $(document).ready(() => {
                  data: JSON.stringify(dataToJson),
                  contentType: "application/json;charset=utf-8",
                  success: ()=>{
-                     GetAllContacts();
-                     CloseModal();
+                     closeModal();
+                     location.reload();
                  }
              }
          );
@@ -112,83 +102,147 @@ $(document).ready(() => {
     {
         if (e.keyCode === 27) 
         {
+            $("#ErrorMessage").text("");
             RemoveColorLines();
         }
     });
 
-    $('tbody tr').on("click", (event)=>
+    $('tbody tr').click((event)=>
     {
         RemoveColorLines();
         event.currentTarget.className =  "Selected";
+        clickFlag = true;
     });
     
     function RemoveColorLines()
     {
         $("tbody tr").removeClass("Selected");
+        clickFlag = false;
     }
 
-    $('#AddButton').on("click", (event)=>
+    $('#AddButton').on("click", ()=>
     {
+        resetInputFields();
+        $("#AdditionalTaskModal h2").text("Adding");
         $("#ConfirmButton").text("Add");
-        OpenModal();
+        openModal();
     });
+    
+    function resetInputFields()
+    {
+        $("input, select").val("");
+    }
 
     $('#DeleteButton').on("click", ()=>
     {
-        $.ajax(
-            {
-                url: serverURL + `/${$(".Selected").attr("id")}`,
-                method: 'delete',
-                async: false,
-                success: ()=>{
-                    location.reload();
+        if(checkFlag())
+        {
+            $.ajax(
+                {
+                    url: serverURL + `/${$(".Selected").attr("id")}`,
+                    method: 'delete',
+                    async: false,
+                    success: ()=>{
+                        location.reload();
+                    }
                 }
-            }
-        );
+            );
+        }
     });
 
     $('#EditButton').on("click", (event)=>
     {
-        modes.EmployeeId = employeeId = $(".Selected").attr("id");
-        getDataFromServer(String(modes.EmployeeId));
-        $("#ConfirmButton").text("Save");
-        OpenModal();
-        selectPosition();
+        if(checkFlag())
+        {
+            modes.EmployeeId = employeeId = $(".Selected").attr("id");
+            getDataFromServer(String(modes.EmployeeId));
+            $("#AdditionalTaskModal h2").text("Editing");
+            $("#ConfirmButton").text("Save");
+            openModal();
+            selectPosition();
+        }
     });
 
     $('#ConfirmButton').on("click", (event)=>
     {
-        const
-            method = ($("#ConfirmButton").text() === 'Add') ? 'post' : 'put',
-            data = {
-            Name: $("#Name").val(),
-            PhoneNumber: $("#Phone").val(),
-            JobTitleId: $('#JobTitleChoice').val(),
-            BirthDate: $('#BirthDate').val(),},
-        url = serverURL + ((method === 'post') ? '' : `/${employeeId}`);
-        processDataOnTheServer(url, method, data);
+       if(checkData())
+       {
+           const
+               method = ($("#ConfirmButton").text() === 'Add') ? 'post' : 'put',
+               data = {
+                   Name: $("#Name").val(),
+                   PhoneNumber: $("#Phone").val(),
+                   JobTitleId: $('#JobTitleChoice').val(),
+                   BirthDate: $('#BirthDate').val(),},
+               url = serverURL + ((method === 'post') ? '' : `/${employeeId}`);
+           processDataOnTheServer(url, method, data);
+       }
     });
     
-    $(".close").on("click", ()=>{
-        CloseModal();
-    });
-    
-    function OpenModal()
+    $(".close").on("click", ()=>
     {
+        closeModal();
+    });
+    
+    function openModal()
+    {
+        $("header, footer, main").css("opacity", "0.3");
         getDataFromServer(modes.JobTitleList);
         $("#AdditionalTask").css("display", "block");
     }
     
-    function CloseModal()
+    function closeModal()
     {
+        $("header, footer, main").css("opacity", "1");
         $("#AdditionalTask").css("display", "none");
+    }
+    
+    function checkFlag()
+    {
+        $("#ErrorMessage").text(!clickFlag ? "please,select an entry!" : "");
+        return clickFlag;
+    }
+    
+    function cutDate(date)
+    {
+        return date.substr(0, 10);
     }
     
     function selectPosition()
     {
-        $("#JobTitleChoice option").each((index, option)=>{
+        $("#JobTitleChoice option").each((index, option)=>
+        {
             option.selected = (option.text === String(employeePosition)) ? "selected" : "";
         });
+    }
+    
+    function checkData() 
+    {
+        let status = true;
+        const Date = $("#BirthDate").val(),
+        errorHandle = (selector)=>{
+            $(selector).text(errorText);
+            status = false;
+        };
+        
+        if($("#Name").val().match(regularExpressions.NameCheck) == null)
+        {
+            errorHandle("label[for='Name']");
+        }
+        else if(Date.match(regularExpressions.DateCheck) == null)
+        {
+            errorHandle("label[for='BirthDate']");
+        }
+        else if($("#Phone").val().match(regularExpressions.PhoneNumberCheck) == null)
+        {
+            errorHandle("label[for='Phone']")
+        }
+        else if($("#JobTitleChoice").val() == null)
+        {
+            errorHandle("label[for='JobTitleChoice']")
+        }
+        return status;
+        
     }
     
     

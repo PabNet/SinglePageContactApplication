@@ -3,6 +3,7 @@ using SinglePageContactApplication.RuntimePlugins;
 
 namespace SinglePageContactApplication.Models.Entities
 {
+    [Table(DataBaseComponentNames.JobTitleTable)]
     public class JobTitle
     {
         [Column(TypeName = DataTypes.KeyType)]

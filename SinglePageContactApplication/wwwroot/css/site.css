@@ -150,7 +150,7 @@ h1, button
   font-size: x-large;
   text-align: right;
   color: black;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 #closeAdditionalTask
@@ -169,24 +169,23 @@ h2
 {
   position: fixed;
   display: none;
-  animation: Animation 1s;
-  width:100%;
-  min-height:100%;
   top: 11%;
   left: 16%;
+  animation: Animation 1s;
 }
 
 input, select
 {
+  padding-left: 10px;
   font-size: large;
-  margin: 20px 185px 0;
+  margin: 0 185px 10px;
   width: 400px;
   height: 40px;
 }
 
 select
 {
-  width: 408px;
+  width: 415px;
   height: 45px;
 }
 
@@ -195,7 +194,7 @@ select
   padding: 20px;
   background-color: #4B539F;
   width: 800px;
-  height: 400px;
+  height: 430px;
 }
 
 #AdditionalTaskModal button
@@ -220,4 +219,11 @@ select
 .Selected
 {
   background-color: #4B539F;
+}
+
+label
+{
+  font-size: small;
+  color: red;
+  margin: 0 185px;
 }

@@ -4,7 +4,8 @@
     {
         public const string ControllerRoute = "/contacts",
             ContactsPageRoute = "wwwroot/contacts.html",
-            ContactsDataFile = "Models/Data/Contacts.json";
+            ContactsDataFile = "Models/Data/Contacts.json",
+            ErrorPageRoute = "wwwroot/error.html";
         
     }
 }
